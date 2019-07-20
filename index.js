@@ -13,6 +13,6 @@ const app = express();
 
 server.applyMiddleware({ app, cors: { credentials: true } });
 
-app.listen(process.env.PORT, () =>
+app.listen({ port: process.env.PORT }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 );
