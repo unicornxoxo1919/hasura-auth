@@ -2,11 +2,11 @@ const { GraphQLClient } = require("graphql-request");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const endpoint = "https://sotired.herokuapp.com/v1/graphql";
+const endpoint = process.env.ENDPOINT;
 
 const graphql = new GraphQLClient(endpoint, {
   headers: {
-    "x-hasura-admin-secret": "kitty"
+    "x-hasura-admin-secret": process.env.HASURA_ACCESS_KEY
   }
 });
 
@@ -34,10 +34,7 @@ const resolvers = {
       const Authorization = req.headers.authorization;
       if (Authorization) {
         const token = Authorization.replace("Bearer ", "");
-        const verifiedToken = jwt.verify(
-          token,
-          "qwertyuiopasdfghjklzxcvbnm1234564231"
-        );
+        const verifiedToken = jwt.verify(token, process.env.JWT_SECRET);
         const user = await graphql
           .request(ME, { id: verifiedToken.userId })
           .then(data => {
@@ -67,7 +64,7 @@ const resolvers = {
             "x-hasura-user-id": user.id
           }
         },
-        "qwertyuiopasdfghjklzxcvbnm1234564231"
+        process.env.JWT_SECRET
       );
       res.cookie("token", token, {
         httpOnly: true,
@@ -94,7 +91,7 @@ const resolvers = {
               "x-hasura-user-id": user.id
             }
           },
-          "qwertyuiopasdfghjklzxcvbnm1234564231"
+          process.env.JWT_SECRET
         );
 
         res.cookie("token", token, {

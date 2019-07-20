@@ -1,5 +1,0 @@
-{
-  "ENDPOINT": "https://sotired.herokuapp.com/v1/graphql",
-  "HASURA_ACCESS_KEY": "kitty",
-  "JWT_SECRET": "qwertyuiopasdfghjklzxcvbnm1234564231"
-}
