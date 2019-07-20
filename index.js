@@ -6,7 +6,8 @@ const typeDefs = require("./typeDefs");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ ...req })
+  context: ({ req }) => ({ ...req }),
+  introspection: true
 });
 
 const app = express();
